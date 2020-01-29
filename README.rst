@@ -3,9 +3,9 @@
 .. image:: https://travis-ci.com/lsst-pst/pstn-021.svg
    :target: https://travis-ci.com/lsst-pst/pstn-021
 
-#########################
-LSST Prompt Data Products
-#########################
+######################
+LSST Prompt Processing
+######################
 
 PSTN-021
 ========

@@ -5,7 +5,15 @@
 
 % Package imports go here.
 
+\usepackage{tcolorbox}
+
 % Local commands go here.
+
+\newcommand{\note}[1]{
+   \begin{tcolorbox}[colback=red!5!white, colframe=red!75!black]
+      #1
+   \end{tcolorbox}
+}
 
 
 
@@ -16,7 +24,7 @@
 \begin{document}
 \input{authors}
 \date{\today}
-\title{LSST Prompt Data Products}
+\title{LSST Prompt Processing}
 \hypersetup{pdftitle={\@title}, pdfauthor={\@author}, pdfkeywords={\@keywords}}
 
 \input{abstract}
