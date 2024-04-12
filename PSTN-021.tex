@@ -1,4 +1,4 @@
-\documentclass[modern]{aastex62}
+\documentclass[modern, twocolumn]{aastex631}
 
 % lsstdoc documentation: https://lsst-texmf.lsst.io/lsstdoc.html
 \input{meta}
@@ -6,6 +6,10 @@
 % Package imports go here.
 
 \usepackage{tcolorbox}
+\usepackage[colorinlistoftodos]{todonotes}
+\let\Oldtodo\todo
+\renewcommand{\todo}[1]{\Oldtodo[inline]{#1}}
+\newcommand{\eric}[2][]{\Oldtodo[inline,color=blue, #1]{Eric: #2}}
 
 % Local commands go here.
 
@@ -24,24 +28,32 @@
 \begin{document}
 \input{authors}
 \date{\today}
-\title{LSST Prompt Processing}
+\title{Alert Production with the Vera C. Rubin Observatory}
 \hypersetup{pdftitle={\@title}, pdfauthor={\@author}, pdfkeywords={\@keywords}}
 
 \input{abstract}
 
-\input{body}
+\listoftodos
 
-\appendix
-% Remove this when you strart your paper
-\input{appendix}
+\input{intro}
+\input{pipeline}
+\input{data}
+\input{environment}
+\input{performance}
+\input{conclusion}
+
+%\appendix
+% Remove this when you start your paper
+%\input{appendix}
 % Include all the relevant bib files.
 % https://lsst-texmf.lsst.io/lsstdoc.html#bibliographies
-\section{References} \label{sec:bib}
-\bibliographystyle{yahapj}
+%section{References} \label{sec:bib}
+\todo{figure out how to make LSST technotes have appropriate information}
+\bibliographystyle{aasjournal}
 \bibliography{local,lsst,lsst-dm,refs_ads,refs,books}
 
 % Make sure lsst-texmf/bin/generateAcronyms.py is in your path
-\section{Acronyms} \label{sec:acronyms}
-\input{acronyms.tex}
+%\section{Acronyms} \label{sec:acronyms}
+%\input{acronyms.tex}
 
 \end{document}
