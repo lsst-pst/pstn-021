@@ -23,9 +23,16 @@ Including discussion of point source, dipole, and streak detection on difference
 
 \note{Algorithmic basics could be discussed elsewhere}
 
-\subsection{Spuriousness scoring}
+\subsection{Reliability scoring}
 
-Algorithm, training, and performance of the ML spuriousness score
+Image-differencing searches for transients typically contend with high rates of false positives.
+Among the raw detections, artifacts may dominate real astrophysical sources by an order of magnitude.
+These may be due to imperfectly-corrected instrument signatures, astrometric mismatches between the template and the science image, cosmic rays, or algorithmic failures in the differencing.
+Modern surveys employ machine-learned classifiers to winnow these candidates \citep[e.g.,][]{Bailey:07:NearbySNFML,Bloom:12:RealBogus,Brink:13:RB2,Wright:15:PS1ML,Goldstein:15:DESRealBogus,Duev:19:Braii}.
+These have steadily improved in performance and sophistication as the classifiers transitioned from Random Forest models trained on manually-constructed feature sets to deep neural networks trained directly on image pixels.
+Some approaches have combined both detection and scoring without using the difference image \citep{Sedaghat:17:Transinet,Acero-Cuellar:22:NoDifference}.
+
+\todo{overview of the algorithm, training, and performance of the ML spuriousness score; detailed discussion likely deferred to separate paper}
 
 \subsection{Source Association}
 
