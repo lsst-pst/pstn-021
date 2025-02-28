@@ -2,18 +2,21 @@
 \section{Pipeline}
 
 %\note{following LDM-151}
-
-\subsection{Single Frame Processing}
-
-\note{Construction of calibration products assumed described in \cite{PSTN-026}.}
-
-ISR, PSF and Background fitting, photometric and astrometric calibration.  Likely major commonalities with DRP.
+\todo{consider a (simplified?) pipeline graph}
 
 \subsection{Template Generation}
 
 \note{Pre-DR1 this may require description independent of DRP.}
 
 High-level discussion of DCR correction could go here.
+
+\subsection{Preload}
+
+\subsection{Single Frame Processing}
+
+\note{Construction of calibration products assumed described in \cite{PSTN-026}.}
+
+ISR, PSF and Background fitting, photometric and astrometric calibration.  Likely major commonalities with DRP.
 
 \subsection{Image Differencing}
 
@@ -22,6 +25,10 @@ High-level discussion of DCR correction could go here.
 Including discussion of point source, dipole, and streak detection on difference images.  
 
 \note{Algorithmic basics could be discussed elsewhere}
+
+\subsection{Initial Filtering}
+
+\texttt{FilterDiaSourceCatalogTask} in \texttt{lsst.ap.association}
 
 \subsection{Reliability scoring}
 
@@ -34,11 +41,26 @@ Some approaches have combined both detection and scoring without using the diffe
 
 \todo{overview of the algorithm, training, and performance of the ML spuriousness score; detailed discussion likely deferred to separate paper}
 
+\subsection{Catalog Transformation}
+
+\texttt{TransformDiaSourceCatalogTask} in  \texttt{lsst.ap.association}
+
 \subsection{Source Association}
 
-Algorithms and interface considerations with the PPDB
+Due to AP's real-time nature, it is not possible to perform \textit{post-facto} source association as in the annual data releases.
+Instead, spatial association is performed on-the-fly by the \texttt{DiaPipelineTask} within the \texttt{lsst.ap.association} package.
+A dedicated Alert Production Database (APDB; \S \ref{sec:db}) holds the current state of the system.
 
-\note{does \cite{PSTN-045} describe the APDB/PPDB implementation?}
+During the preload step (\S \ref{sec:preload}), DIAObjects and SSObjects overlapping the expected field of view of the image are stored in the local prompt processing worker butler repository.
+The new DIASources are first spatially associated with the existing DIAObjects by finding the closest match within a maximum distance of one arcsecond.
+Pairs with the closest spatial separations are joined first to minimize misassociations.
+When a match is found, the DIASource is added to the DIAObject's list of measurements.
+Unassociated DIASources are then spatially associated with the predicted positions of the SSObjects at the time of the exposure.
+For DIASources with no matching DIAObject or SSObject, a new DIAObject is created and the DIASource is added to it.
+
+
+
+%\note{does \cite{PSTN-045} describe the APDB/PPDB implementation?}
 
 \subsection{Alert Generation}
 
