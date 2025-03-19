@@ -83,22 +83,36 @@ Most cutouts are 30$\times$30 pixels but are expanded to a larger size for exten
 The maximimum cutout size of \todo{confirm} allows cutouts to contain trailed Near Earth Asteroids traveling slower than ten degrees per day.
 
 Alerts are transmitted and stored in Apache Avro\footnote{\url{https://avro.apache.org/}} format, a strongly-schemaed compact binary serialization.
-Unlike the data, Avro schemas are uncompressed ASCII.
+However, the Avro standard includes its schemas as uncompressed ASCII.
 To conserve bandwidth, we therefore send alerts without including the schemas required to deserialize them.
 Instead, the schemas are stored in a separate schema registry and are referenced by a unique identifier in the alert packet.
 
-\eric{sizing estimates}
+\eric{sizing estimates here or in initial performance section?}
 
 \subsection{Alert Distribution} \label{sec:alertdist}
 
-Mechanisms, connections to community brokers
+We use the Kafka distributed streaming platform\footnote{\url{https://kafka.apache.org/}} to transmit alerts to brokers.
+Kafka provides a fault-tolerant, low-overhead mechanism to transmit large volumes of data to multiple consumers and is widely used both in industry and in astronomy. 
+\eric{cite patterson, GCN, Hopskotch, other Rubin usage...}
 
-schema management
+The Alert Distribution Kafka system is deployed at the USDF using Kubernetes.
+\bri{details of the deployment}
+\eric{schema management}
+
+Because of the large size of the alert packets and the short latency requirement, bandwidth out of the US Data Facility (USDF) at SLAC limits the number of direct recepients of the full alert stream.
+Seven community alert brokers were selected through a proposal process \eric{cite} to receive the full alert stream directly from the USDF:
+\eric{list}
+Two additional brokers will operate downstream of a full-stream broker.
+
 
 \subsection{Alert Filtering Service}
+
+ANTARES system
+
+community alert filters
 
 \subsection{Forced Photometry}
 
 \subsection{Source Injection}
 
-\subsection{Metrics}
+\subsection{Metrics and Monitoring}
